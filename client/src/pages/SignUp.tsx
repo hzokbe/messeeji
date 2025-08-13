@@ -1,15 +1,6 @@
 import { useState, type FormEvent } from "react";
 
-import {
-  Avatar,
-  Button,
-  TextField,
-  Box,
-  Typography,
-  Container,
-} from "@mui/material";
-
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import { Button, TextField, Box, Typography, Container } from "@mui/material";
 
 function SignUp() {
   const [username, setUsername] = useState("");
@@ -25,20 +16,26 @@ function SignUp() {
   };
 
   return (
-    <Container component="main" maxWidth="xs">
+    <Container
+      component="main"
+      maxWidth="xs"
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        height: "100dvh",
+      }}
+    >
       <Box
         sx={{
-          marginTop: 8,
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
+          justifyContent: "center",
         }}
       >
-        <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-          <LockOutlinedIcon />
-        </Avatar>
-
-        <Typography component="h1" variant="h5">
+        <Typography component="h1" variant="h3">
           Sign Up
         </Typography>
 
