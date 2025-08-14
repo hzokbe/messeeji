@@ -11,10 +11,37 @@ import {
   Typography,
 } from "@mui/material";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
+
+import { useLocation, useNavigate } from "react-router-dom";
 
 const Groups = () => {
   const [index, setIndex] = useState(1);
+
+  const navigate = useNavigate();
+
+  const location = useLocation();
+
+  useEffect(() => {
+    if (location.pathname === "/") {
+      setIndex(0);
+    } else if (location.pathname === "/groups") {
+      setIndex(1);
+    } else if (location.pathname === "/settings") {
+      setIndex(2);
+    }
+  }, [location.pathname]);
+
+  const handleNavigationChange = (_: any, newIndex: number) => {
+    setIndex(newIndex);
+    if (newIndex === 0) {
+      navigate("/");
+    } else if (newIndex === 1) {
+      navigate("/groups");
+    } else if (newIndex === 2) {
+      navigate("/settings");
+    }
+  };
 
   return (
     <Box
@@ -45,9 +72,7 @@ const Groups = () => {
       <BottomNavigation
         showLabels
         value={index}
-        onChange={(_, newIndex) => {
-          setIndex(newIndex);
-        }}
+        onChange={handleNavigationChange}
         sx={{
           width: "100vw",
           position: "absolute",
