@@ -15,6 +15,7 @@ import {
 import { useEffect, useState } from "react";
 
 import { useLocation, useNavigate } from "react-router-dom";
+import handleNavigationChange from "../utils/navigation";
 
 const Messages = () => {
   const [index, setIndex] = useState(1);
@@ -35,18 +36,8 @@ const Messages = () => {
     }
   }, [location.pathname]);
 
-  const handleNavigationChange = (_: any, newIndex: number) => {
-    setIndex(newIndex);
-    if (newIndex === 0) {
-      navigate("/");
-    } else if (newIndex === 1) {
-      navigate("/messages");
-    } else if (newIndex === 2) {
-      navigate("/groups");
-    } else if (newIndex === 3) {
-      navigate("/settings");
-    }
-  };
+  const onChange = (_: any, newIndex: number) =>
+    handleNavigationChange(newIndex, setIndex, navigate);
 
   return (
     <Box
@@ -77,7 +68,7 @@ const Messages = () => {
       <BottomNavigation
         showLabels
         value={index}
-        onChange={handleNavigationChange}
+        onChange={onChange}
         sx={{
           width: "100vw",
           position: "absolute",
