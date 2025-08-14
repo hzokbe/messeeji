@@ -10,6 +10,8 @@ import Home from "./pages/Home";
 
 import Groups from "./pages/Groups";
 
+import Settings from "./pages/Settings";
+
 function App() {
   return (
     <Router>
@@ -21,6 +23,8 @@ function App() {
         <Route path="/" element={<Home />} />
 
         <Route path="/groups" element={<Groups />} />
+
+        <Route path="/settings" element={<Settings />} />
       </Routes>
     </Router>
   );
