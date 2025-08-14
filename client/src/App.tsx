@@ -12,6 +12,8 @@ import Groups from "./pages/Groups";
 
 import Settings from "./pages/Settings";
 
+import Messages from "./pages/Messages";
+
 function App() {
   return (
     <Router>
@@ -21,6 +23,8 @@ function App() {
         <Route path="/sign-up" element={<SignUp />} />
 
         <Route path="/" element={<Home />} />
+
+        <Route path="/messages" element={<Messages />} />
 
         <Route path="/groups" element={<Groups />} />
 

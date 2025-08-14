@@ -1,5 +1,6 @@
 import {
   HouseOutlined,
+  MessageOutlined,
   PeopleOutlined,
   SettingsOutlined,
 } from "@mui/icons-material";
@@ -25,10 +26,12 @@ const Home = () => {
   useEffect(() => {
     if (location.pathname === "/") {
       setIndex(0);
-    } else if (location.pathname === "/groups") {
+    } else if (location.pathname === "/messages") {
       setIndex(1);
-    } else if (location.pathname === "/settings") {
+    } else if (location.pathname === "/groups") {
       setIndex(2);
+    } else if (location.pathname === "/settings") {
+      setIndex(3);
     }
   }, [location.pathname]);
 
@@ -37,8 +40,10 @@ const Home = () => {
     if (newIndex === 0) {
       navigate("/");
     } else if (newIndex === 1) {
-      navigate("/groups");
+      navigate("/messages");
     } else if (newIndex === 2) {
+      navigate("/groups");
+    } else if (newIndex === 3) {
       navigate("/settings");
     }
   };
@@ -80,6 +85,8 @@ const Home = () => {
         }}
       >
         <BottomNavigationAction label="Home" icon={<HouseOutlined />} />
+
+        <BottomNavigationAction label="Messages" icon={<MessageOutlined />} />
 
         <BottomNavigationAction label="Groups" icon={<PeopleOutlined />} />
 

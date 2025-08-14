@@ -16,7 +16,7 @@ import { useEffect, useState } from "react";
 
 import { useLocation, useNavigate } from "react-router-dom";
 
-const Groups = () => {
+const Messages = () => {
   const [index, setIndex] = useState(1);
 
   const navigate = useNavigate();
@@ -71,7 +71,7 @@ const Groups = () => {
           color: "#a3a3a3",
         }}
       >
-        Groups
+        Messages
       </Typography>
 
       <BottomNavigation
@@ -96,4 +96,4 @@ const Groups = () => {
   );
 };
 
-export default Groups;
+export default Messages;
