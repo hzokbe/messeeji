@@ -18,6 +18,8 @@ import { useLocation, useNavigate } from "react-router-dom";
 
 import handleNavigationChange from "../utils/navigation";
 
+import setIndexByPathname from "../utils/location";
+
 const Settings = () => {
   const [index, setIndex] = useState(2);
 
@@ -25,17 +27,10 @@ const Settings = () => {
 
   const location = useLocation();
 
-  useEffect(() => {
-    if (location.pathname === "/") {
-      setIndex(0);
-    } else if (location.pathname === "/messages") {
-      setIndex(1);
-    } else if (location.pathname === "/groups") {
-      setIndex(2);
-    } else if (location.pathname === "/settings") {
-      setIndex(3);
-    }
-  }, [location.pathname]);
+  useEffect(
+    () => setIndexByPathname(location.pathname, setIndex),
+    [location.pathname]
+  );
 
   const onChange = (_: any, newIndex: number) =>
     handleNavigationChange(newIndex, setIndex, navigate);

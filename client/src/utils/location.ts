@@ -1,0 +1,15 @@
+type SetIndexFunction = (index: number) => void;
+
+const setIndexByPathname = (pathname: string, setIndex: SetIndexFunction) => {
+    if (pathname === "/") {
+      setIndex(0);
+    } else if (pathname === "/messages") {
+      setIndex(1);
+    } else if (pathname === "/groups") {
+      setIndex(2);
+    } else if (pathname === "/settings") {
+      setIndex(3);
+    }
+}
+
+export default setIndexByPathname;
