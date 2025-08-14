@@ -15,6 +15,7 @@ import {
 import { useEffect, useState } from "react";
 
 import { useLocation, useNavigate } from "react-router-dom";
+
 import handleNavigationChange from "../utils/navigation";
 
 const Messages = () => {
