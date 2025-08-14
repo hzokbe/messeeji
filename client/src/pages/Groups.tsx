@@ -14,7 +14,7 @@ import {
 import { useState } from "react";
 
 const Groups = () => {
-  const [index, setIndex] = useState(0);
+  const [index, setIndex] = useState(1);
 
   return (
     <Box
