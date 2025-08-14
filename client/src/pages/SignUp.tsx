@@ -35,7 +35,19 @@ function SignUp() {
           justifyContent: "center",
         }}
       >
-        <Typography component="h1" variant="h3">
+        <Typography
+          component="h1"
+          variant="h3"
+          sx={{
+            whiteSpace: "nowrap",
+            overflow: "hidden",
+            textOverflow: "ellipsis",
+            textAlign: "center",
+            userSelect: "none",
+            fontWeight: "bolder",
+            color: "#a3a3a3",
+          }}
+        >
           Sign Up
         </Typography>
 
