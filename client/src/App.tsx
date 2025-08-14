@@ -8,6 +8,8 @@ import SignUp from "./pages/SignUp";
 
 import Home from "./pages/Home";
 
+import Groups from "./pages/Groups";
+
 function App() {
   return (
     <Router>
@@ -17,6 +19,8 @@ function App() {
         <Route path="/sign-up" element={<SignUp />} />
 
         <Route path="/" element={<Home />} />
+
+        <Route path="/groups" element={<Groups />} />
       </Routes>
     </Router>
   );
