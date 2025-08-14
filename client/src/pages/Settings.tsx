@@ -14,7 +14,7 @@ import {
 import { useState } from "react";
 
 const Settings = () => {
-  const [index, setIndex] = useState(0);
+  const [index, setIndex] = useState(2);
 
   return (
     <Box
