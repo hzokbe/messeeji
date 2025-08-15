@@ -56,6 +56,8 @@ const Messages = () => {
     },
   ];
 
+  const [selectedMessage, setSelectedMessage] = useState<Message | null>(null);
+
   useEffect(() => {
     setIndexByPathname(location.pathname, setIndex);
   }, [location.pathname]);
@@ -64,69 +66,110 @@ const Messages = () => {
     handleNavigationChange(newIndex, setIndex, navigate);
 
   return (
-    <Box
-      sx={{
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
-        height: "100dvh",
-      }}
-    >
-      <List
-        sx={{
-          width: "100%",
-          maxWidth: 720,
-          bgcolor: "background.paper",
-        }}
-      >
-        {messages.map((m: Message) => (
-          <>
-            <Link to="/" style={{ textDecoration: "none", color: "inherit" }}>
+    <Box sx={{ display: "flex", flexDirection: "column", height: "100dvh" }}>
+      <Box sx={{ display: "flex", flex: 1, width: "100%" }}>
+        <Box
+          sx={{
+            width: "30%",
+            borderRight: "1px solid #e5e5e5",
+            overflowY: "auto",
+          }}
+        >
+          <List>
+            {messages.map((m: Message) => (
               <ListItem
+                key={m.author}
                 alignItems="flex-start"
+                onClick={() => setSelectedMessage(m)}
                 sx={{
-                  whiteSpace: "nowrap",
-                  overflow: "hidden",
-                  textOverflow: "ellipsis",
-                  userSelect: "none",
-                  fontWeight: "bolder",
-                  color: "#525252",
-                  marginTop: "16px",
+                  cursor: "pointer",
+                  transition: "background-color 0.25s ease-in-out",
+                  "&:hover": { backgroundColor: "#f5f5f5" },
                 }}
               >
                 <ListItemAvatar>
-                  <Avatar alt="Alan Turing" src={m.avatarSrc} />
+                  <Avatar alt={m.author} src={m.avatarSrc} />
                 </ListItemAvatar>
-
                 <ListItemText
                   primary={
-                    <Typography sx={{ fontSize: "1.5rem", color: "#525252" }}>
+                    <Typography
+                      sx={{
+                        color: "#525252",
+                        fontWeight: "bold",
+                        userSelect: "none",
+                      }}
+                    >
                       {m.author}
                     </Typography>
                   }
                   secondary={
-                    <Typography sx={{ color: "#a3a3a3" }}>
+                    <Typography sx={{ color: "#a3a3a3", userSelect: "none" }}>
                       {m.content}
                     </Typography>
                   }
                 />
               </ListItem>
+            ))}
+          </List>
+        </Box>
 
-              <Divider variant="inset" component="li" />
-            </Link>
-          </>
-        ))}
-      </List>
+        <Box
+          sx={{
+            width: "70%",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+            padding: 2,
+          }}
+        >
+          {selectedMessage ? (
+            <>
+              <Typography
+                variant="h4"
+                gutterBottom
+                sx={{
+                  color: "#525252",
+                  userSelect: "none",
+                  fontWeight: "bolder",
+                }}
+              >
+                {selectedMessage.author}
+              </Typography>
+              <Typography
+                variant="body1"
+                sx={{ color: "#a3a3a3", userSelect: "none" }}
+              >
+                {selectedMessage.content}
+              </Typography>
+            </>
+          ) : (
+            <Typography
+              variant="h2"
+              component="h1"
+              sx={{
+                whiteSpace: "nowrap",
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                textAlign: "center",
+                userSelect: "none",
+                fontWeight: "bolder",
+                color: "#a3a3a3",
+              }}
+            >
+              Messages
+            </Typography>
+          )}
+        </Box>
+      </Box>
 
       <BottomNavigation
         showLabels
         value={index}
         onChange={onChange}
         sx={{
-          width: "100vw",
-          position: "absolute",
-          bottom: "0px",
+          width: "100%",
+          borderTop: "1px solid #e0e0e0",
         }}
       >
         <BottomNavigationAction label="Home" icon={<HouseOutlined />} />
