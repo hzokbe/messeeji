@@ -20,7 +20,7 @@ import {
   Typography,
 } from "@mui/material";
 
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { useLocation, useNavigate } from "react-router-dom";
 
@@ -31,6 +31,7 @@ import setIndexByPathname from "../utils/location";
 type Message = {
   content: string;
   date: Date;
+  type: "sent" | "received";
 };
 
 type Conversation = {
@@ -59,15 +60,34 @@ const Messages = () => {
         {
           content: "Hello! I'm Alan Turing!",
           date: new Date("2024-08-15T10:58:00Z"),
+          type: "received",
         },
-        { content: "How are you?", date: new Date("2024-08-15T10:59:00Z") },
+        {
+          content: "How are you?",
+          date: new Date("2024-08-15T10:59:00Z"),
+          type: "received",
+        },
+        {
+          content: "OMG",
+          date: new Date("2024-08-15T15:02:00Z"),
+          type: "sent",
+        },
       ],
     },
     {
       author: "Linus Torvalds",
       avatarSrc: "static/images/avatar/linus-torvalds.jpg",
       messages: [
-        { content: "F*ck NVIDIA!", date: new Date("2024-08-15T00:09:00Z") },
+        {
+          content: "F*ck NVIDIA!",
+          date: new Date("2024-08-15T00:09:00Z"),
+          type: "received",
+        },
+        {
+          content: "Based",
+          date: new Date("2024-08-15T08:09:00Z"),
+          type: "sent",
+        },
       ],
     },
   ];
@@ -87,6 +107,32 @@ const Messages = () => {
 
   const onChange = (_: any, newIndex: number) =>
     handleNavigationChange(newIndex, setIndex, navigate);
+
+  const [messageContent, setMessageContent] = useState("");
+
+  const sendMessage = async () => {
+    if (messageContent.trim() == "") {
+      return;
+    }
+
+    selectedConversation?.messages.push({
+      content: messageContent,
+      date: new Date(),
+      type: "sent",
+    });
+
+    setMessageContent("");
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+
+      if (messageContent.trim() !== "") {
+        sendMessage();
+      }
+    }
+  };
 
   return (
     <Box sx={{ display: "flex", flexDirection: "column", height: "100dvh" }}>
@@ -160,14 +206,16 @@ const Messages = () => {
         >
           <Box sx={{ flex: "1" }}>
             {selectedConversation && (
-              <List>
+              <Box sx={{ display: "flex", flexDirection: "column" }}>
                 {selectedConversation.messages.map((m: Message, i) => (
                   <ListItem
                     key={i}
                     alignItems="flex-start"
                     sx={{
+                      alignSelf: m.type === "sent" ? "flex-end" : "flex-start",
                       boxSizing: "border-box",
-                      backgroundColor: "#f5f5f5",
+                      backgroundColor:
+                        m.type === "sent" ? "#dbeafe" : "#f5f5f5",
                       margin: "8px",
                       width: "max-content",
                       borderRadius: "5px",
@@ -177,26 +225,10 @@ const Messages = () => {
                     }}
                   >
                     <Box sx={{ display: "flex" }}>
-                      <ListItemAvatar
-                        sx={{
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                        }}
-                      >
-                        <Avatar
-                          alt={selectedConversation.author}
-                          src={selectedConversation.avatarSrc}
-                        />
-                      </ListItemAvatar>
                       <ListItemText
                         sx={{ display: "flex", alignItems: "end" }}
                         secondary={
-                          <Typography
-                            sx={{
-                              color: "#a3a3a3",
-                            }}
-                          >
+                          <Typography sx={{ color: "#a3a3a3" }}>
                             {m.content}
                           </Typography>
                         }
@@ -218,15 +250,22 @@ const Messages = () => {
                     </Typography>
                   </ListItem>
                 ))}
-              </List>
+              </Box>
             )}
           </Box>
 
           {selectedConversation && (
             <Box sx={{ display: "flex", gap: "8px" }}>
-              <TextField placeholder="Send message" sx={{ flex: "1" }} />
+              <TextField
+                placeholder="Send message"
+                sx={{ flex: "1" }}
+                value={messageContent}
+                onChange={(e) => setMessageContent(e.target.value)}
+                onKeyDown={handleKeyDown}
+                multiline
+              />
 
-              <Button variant="contained">
+              <Button variant="contained" onClick={sendMessage}>
                 <SendOutlined />
               </Button>
             </Box>
