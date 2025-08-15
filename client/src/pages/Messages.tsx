@@ -2,6 +2,7 @@ import {
   HouseOutlined,
   MessageOutlined,
   PeopleOutlined,
+  SendOutlined,
   SettingsOutlined,
 } from "@mui/icons-material";
 
@@ -10,6 +11,7 @@ import {
   BottomNavigation,
   BottomNavigationAction,
   Box,
+  Button,
   List,
   ListItem,
   ListItemAvatar,
@@ -27,34 +29,51 @@ import handleNavigationChange from "../utils/navigation";
 import setIndexByPathname from "../utils/location";
 
 type Message = {
-  author: string;
-
   content: string;
+};
 
+type Conversation = {
+  author: string;
   avatarSrc: string;
+  messages: Message[];
 };
 
 const Messages = () => {
   const [index, setIndex] = useState(1);
 
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const [selectedConversation, setSelectedConversation] =
+    useState<Conversation | null>(null);
+
   const navigate = useNavigate();
 
   const location = useLocation();
 
-  const messages: Message[] = [
+  const conversations: Conversation[] = [
     {
       author: "Alan Turing",
-      content: "Hello! I'm Alan Turing!",
       avatarSrc: "static/images/avatar/alan-turing.jpg",
+      messages: [
+        { content: "Hello! I'm Alan Turing!" },
+        { content: "How are you?" },
+      ],
     },
     {
       author: "Linus Torvalds",
-      content: "F*ck NVIDIA!",
       avatarSrc: "static/images/avatar/linus-torvalds.jpg",
+      messages: [{ content: "F*ck NVIDIA!" }],
     },
   ];
 
-  const [selectedMessage, setSelectedMessage] = useState<Message | null>(null);
+  const filteredConversations = conversations.filter((c) => {
+    const lastMessage = c.messages[c.messages.length - 1]?.content || "";
+
+    return (
+      c.author.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      lastMessage.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+  });
 
   useEffect(() => {
     setIndexByPathname(location.pathname, setIndex);
@@ -75,43 +94,52 @@ const Messages = () => {
             padding: "16px",
           }}
         >
-          <TextField sx={{ width: "100%" }} placeholder="Search messages" />
+          <TextField
+            sx={{ width: "100%", marginBottom: "16px" }}
+            placeholder="Search messages"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
 
           <List>
-            {messages.map((m: Message) => (
-              <ListItem
-                key={m.author}
-                alignItems="flex-start"
-                onClick={() => setSelectedMessage(m)}
-                sx={{
-                  cursor: "pointer",
-                  transition: "background-color 0.25s ease-in-out",
-                  "&:hover": { backgroundColor: "#f5f5f5" },
-                }}
-              >
-                <ListItemAvatar>
-                  <Avatar alt={m.author} src={m.avatarSrc} />
-                </ListItemAvatar>
-                <ListItemText
-                  primary={
-                    <Typography
-                      sx={{
-                        color: "#525252",
-                        fontWeight: "bold",
-                        userSelect: "none",
-                      }}
-                    >
-                      {m.author}
-                    </Typography>
-                  }
-                  secondary={
-                    <Typography sx={{ color: "#a3a3a3", userSelect: "none" }}>
-                      {m.content}
-                    </Typography>
-                  }
-                />
-              </ListItem>
-            ))}
+            {filteredConversations.map((c: Conversation, idx) => {
+              const lastMessage = c.messages[c.messages.length - 1];
+
+              return (
+                <ListItem
+                  key={`${c.author}-${idx}`}
+                  alignItems="flex-start"
+                  onClick={() => setSelectedConversation(c)}
+                  sx={{
+                    cursor: "pointer",
+                    transition: "background-color 0.25s ease-in-out",
+                    "&:hover": { backgroundColor: "#f5f5f5" },
+                  }}
+                >
+                  <ListItemAvatar>
+                    <Avatar alt={c.author} src={c.avatarSrc} />
+                  </ListItemAvatar>
+                  <ListItemText
+                    primary={
+                      <Typography
+                        sx={{
+                          color: "#525252",
+                          fontWeight: "bold",
+                          userSelect: "none",
+                        }}
+                      >
+                        {c.author}
+                      </Typography>
+                    }
+                    secondary={
+                      <Typography sx={{ color: "#a3a3a3", userSelect: "none" }}>
+                        {lastMessage?.content}
+                      </Typography>
+                    }
+                  />
+                </ListItem>
+              );
+            })}
           </List>
         </Box>
 
@@ -120,47 +148,66 @@ const Messages = () => {
             width: "70%",
             display: "flex",
             flexDirection: "column",
-            justifyContent: "center",
-            alignItems: "center",
             padding: 2,
+            overflowY: "auto",
           }}
         >
-          {selectedMessage ? (
-            <>
-              <Typography
-                variant="h4"
-                gutterBottom
-                sx={{
-                  color: "#525252",
-                  userSelect: "none",
-                  fontWeight: "bolder",
-                }}
-              >
-                {selectedMessage.author}
-              </Typography>
-              <Typography
-                variant="body1"
-                sx={{ color: "#a3a3a3", userSelect: "none" }}
-              >
-                {selectedMessage.content}
-              </Typography>
-            </>
-          ) : (
-            <Typography
-              variant="h2"
-              component="h1"
-              sx={{
-                whiteSpace: "nowrap",
-                overflow: "hidden",
-                textOverflow: "ellipsis",
-                textAlign: "center",
-                userSelect: "none",
-                fontWeight: "bolder",
-                color: "#a3a3a3",
-              }}
-            >
-              Messages
-            </Typography>
+          <Box sx={{ flex: "1" }}>
+            {selectedConversation && (
+              <List>
+                {selectedConversation.messages.map((m: Message, i) => (
+                  <ListItem
+                    key={i}
+                    alignItems="flex-start"
+                    sx={{
+                      boxSizing: "border-box",
+                      backgroundColor: "#f5f5f5",
+                      margin: "8px",
+                      width: "max-content",
+                      borderRadius: "5px",
+                      paddingRight: "64px",
+                    }}
+                  >
+                    <ListItemAvatar>
+                      <Avatar
+                        alt={selectedConversation.author}
+                        src={selectedConversation.avatarSrc}
+                      />
+                    </ListItemAvatar>
+                    <ListItemText
+                      primary={
+                        <Typography
+                          sx={{
+                            color: "#525252",
+                            fontWeight: "bold",
+                            userSelect: "none",
+                          }}
+                        >
+                          {selectedConversation.author}
+                        </Typography>
+                      }
+                      secondary={
+                        <Typography
+                          sx={{ color: "#a3a3a3", userSelect: "none" }}
+                        >
+                          {m.content}
+                        </Typography>
+                      }
+                    />
+                  </ListItem>
+                ))}
+              </List>
+            )}
+          </Box>
+
+          {selectedConversation && (
+            <Box sx={{ display: "flex", gap: "8px" }}>
+              <TextField placeholder="Send message" sx={{ flex: "1" }} />
+
+              <Button variant="contained">
+                <SendOutlined />
+              </Button>
+            </Box>
           )}
         </Box>
       </Box>
