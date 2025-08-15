@@ -10,11 +10,11 @@ import {
   BottomNavigation,
   BottomNavigationAction,
   Box,
-  Divider,
   List,
   ListItem,
   ListItemAvatar,
   ListItemText,
+  TextField,
   Typography,
 } from "@mui/material";
 
@@ -25,8 +25,6 @@ import { useLocation, useNavigate } from "react-router-dom";
 import handleNavigationChange from "../utils/navigation";
 
 import setIndexByPathname from "../utils/location";
-
-import { Link } from "react-router-dom";
 
 type Message = {
   author: string;
@@ -73,8 +71,12 @@ const Messages = () => {
             width: "30%",
             borderRight: "1px solid #e5e5e5",
             overflowY: "auto",
+            boxSizing: "border-box",
+            padding: "16px",
           }}
         >
+          <TextField sx={{ width: "100%" }} placeholder="Search messages" />
+
           <List>
             {messages.map((m: Message) => (
               <ListItem
