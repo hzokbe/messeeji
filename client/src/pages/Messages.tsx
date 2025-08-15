@@ -30,6 +30,7 @@ import setIndexByPathname from "../utils/location";
 
 type Message = {
   content: string;
+  date: Date;
 };
 
 type Conversation = {
@@ -55,14 +56,19 @@ const Messages = () => {
       author: "Alan Turing",
       avatarSrc: "static/images/avatar/alan-turing.jpg",
       messages: [
-        { content: "Hello! I'm Alan Turing!" },
-        { content: "How are you?" },
+        {
+          content: "Hello! I'm Alan Turing!",
+          date: new Date("2024-08-15T10:58:00Z"),
+        },
+        { content: "How are you?", date: new Date("2024-08-15T10:59:00Z") },
       ],
     },
     {
       author: "Linus Torvalds",
       avatarSrc: "static/images/avatar/linus-torvalds.jpg",
-      messages: [{ content: "F*ck NVIDIA!" }],
+      messages: [
+        { content: "F*ck NVIDIA!", date: new Date("2024-08-15T00:09:00Z") },
+      ],
     },
   ];
 
@@ -165,35 +171,51 @@ const Messages = () => {
                       margin: "8px",
                       width: "max-content",
                       borderRadius: "5px",
-                      paddingRight: "64px",
+                      display: "flex",
+                      gap: "32px",
+                      alignItems: "end",
                     }}
                   >
-                    <ListItemAvatar>
-                      <Avatar
-                        alt={selectedConversation.author}
-                        src={selectedConversation.avatarSrc}
+                    <Box sx={{ display: "flex" }}>
+                      <ListItemAvatar
+                        sx={{
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                        }}
+                      >
+                        <Avatar
+                          alt={selectedConversation.author}
+                          src={selectedConversation.avatarSrc}
+                        />
+                      </ListItemAvatar>
+                      <ListItemText
+                        sx={{ display: "flex", alignItems: "end" }}
+                        secondary={
+                          <Typography
+                            sx={{
+                              color: "#a3a3a3",
+                            }}
+                          >
+                            {m.content}
+                          </Typography>
+                        }
                       />
-                    </ListItemAvatar>
-                    <ListItemText
-                      primary={
-                        <Typography
-                          sx={{
-                            color: "#525252",
-                            fontWeight: "bold",
-                            userSelect: "none",
-                          }}
-                        >
-                          {selectedConversation.author}
-                        </Typography>
-                      }
-                      secondary={
-                        <Typography
-                          sx={{ color: "#a3a3a3", userSelect: "none" }}
-                        >
-                          {m.content}
-                        </Typography>
-                      }
-                    />
+                    </Box>
+
+                    <Typography
+                      component="h6"
+                      sx={{
+                        fontSize: "0.75rem",
+                        userSelect: "none",
+                        color: "#a3a3a3",
+                      }}
+                    >
+                      {m.date.toLocaleTimeString([], {
+                        hour: "2-digit",
+                        minute: "2-digit",
+                      })}
+                    </Typography>
                   </ListItem>
                 ))}
               </List>
