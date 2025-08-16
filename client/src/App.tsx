@@ -14,6 +14,8 @@ import Settings from "./pages/Settings";
 
 import Messages from "./pages/Messages";
 
+import Friends from "./pages/Friends";
+
 function App() {
   return (
     <Router>
@@ -25,6 +27,8 @@ function App() {
         <Route path="/" element={<Home />} />
 
         <Route path="/messages" element={<Messages />} />
+
+        <Route path="/friends" element={<Friends />} />
 
         <Route path="/groups" element={<Groups />} />
 

@@ -30,6 +30,8 @@ const NavigationBar = (props: NavigationBarProps) => {
 
       <BottomNavigationAction label="Messages" icon={<MessageOutlined />} />
 
+      <BottomNavigationAction label="Friends" icon={<PeopleOutlined />} />
+
       <BottomNavigationAction label="Groups" icon={<PeopleOutlined />} />
 
       <BottomNavigationAction label="Settings" icon={<SettingsOutlined />} />
