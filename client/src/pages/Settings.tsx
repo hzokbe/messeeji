@@ -1,16 +1,4 @@
-import {
-  HouseOutlined,
-  MessageOutlined,
-  PeopleOutlined,
-  SettingsOutlined,
-} from "@mui/icons-material";
-
-import {
-  BottomNavigation,
-  BottomNavigationAction,
-  Box,
-  Typography,
-} from "@mui/material";
+import { Box, Typography } from "@mui/material";
 
 import { useEffect, useState } from "react";
 
@@ -19,6 +7,8 @@ import { useLocation, useNavigate } from "react-router-dom";
 import handleNavigationChange from "../utils/navigation";
 
 import setIndexByPathname from "../utils/location";
+
+import NavigationBar from "../components/NavigationBar";
 
 const Settings = () => {
   const [index, setIndex] = useState(2);
@@ -61,24 +51,7 @@ const Settings = () => {
         Settings
       </Typography>
 
-      <BottomNavigation
-        showLabels
-        value={index}
-        onChange={onChange}
-        sx={{
-          width: "100vw",
-          position: "absolute",
-          bottom: "0px",
-        }}
-      >
-        <BottomNavigationAction label="Home" icon={<HouseOutlined />} />
-
-        <BottomNavigationAction label="Messages" icon={<MessageOutlined />} />
-
-        <BottomNavigationAction label="Groups" icon={<PeopleOutlined />} />
-
-        <BottomNavigationAction label="Settings" icon={<SettingsOutlined />} />
-      </BottomNavigation>
+      <NavigationBar index={index} onChange={onChange} />
     </Box>
   );
 };

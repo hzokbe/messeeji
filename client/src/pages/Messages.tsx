@@ -1,15 +1,5 @@
 import {
-  HouseOutlined,
-  MessageOutlined,
-  PeopleOutlined,
-  SendOutlined,
-  SettingsOutlined,
-} from "@mui/icons-material";
-
-import {
   Avatar,
-  BottomNavigation,
-  BottomNavigationAction,
   Box,
   Button,
   List,
@@ -27,6 +17,10 @@ import { useLocation, useNavigate } from "react-router-dom";
 import handleNavigationChange from "../utils/navigation";
 
 import setIndexByPathname from "../utils/location";
+
+import NavigationBar from "../components/NavigationBar";
+
+import { SendOutlined } from "@mui/icons-material";
 
 type Message = {
   content: string;
@@ -273,23 +267,7 @@ const Messages = () => {
         </Box>
       </Box>
 
-      <BottomNavigation
-        showLabels
-        value={index}
-        onChange={onChange}
-        sx={{
-          width: "100%",
-          borderTop: "1px solid #e0e0e0",
-        }}
-      >
-        <BottomNavigationAction label="Home" icon={<HouseOutlined />} />
-
-        <BottomNavigationAction label="Messages" icon={<MessageOutlined />} />
-
-        <BottomNavigationAction label="Groups" icon={<PeopleOutlined />} />
-
-        <BottomNavigationAction label="Settings" icon={<SettingsOutlined />} />
-      </BottomNavigation>
+      <NavigationBar index={index} onChange={onChange} />
     </Box>
   );
 };
