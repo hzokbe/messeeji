@@ -22,7 +22,6 @@ const NavigationBar = (props: NavigationBarProps) => {
       onChange={props.onChange}
       sx={{
         width: "100vw",
-        position: "absolute",
         bottom: "0px",
       }}
     >

@@ -64,40 +64,51 @@ const Friends = () => {
         padding: "8px",
       }}
     >
-      <List
+      <Box
         sx={{
+          flex: "1",
+          display: "flex",
+          alignContent: "center",
+          justifyContent: "center",
+          flexDirection: "column",
           width: "100%",
         }}
       >
-        {friends.map((f: Friend) => (
-          <ListItem
-            key={`${f.username}`}
-            alignItems="flex-start"
-            sx={{
-              cursor: "pointer",
-              transition: "background-color 0.25s ease-in-out",
-              "&:hover": { backgroundColor: "#f5f5f5" },
-            }}
-          >
-            <ListItemAvatar>
-              <Avatar alt={f.name} src={f.avatarSrc} />
-            </ListItemAvatar>
-            <ListItemText
-              primary={
-                <Typography
-                  sx={{
-                    color: "#525252",
-                    fontWeight: "bold",
-                    userSelect: "none",
-                  }}
-                >
-                  {f.name}
-                </Typography>
-              }
-            />
-          </ListItem>
-        ))}
-      </List>
+        <List
+          sx={{
+            width: "100%",
+          }}
+        >
+          {friends.map((f: Friend) => (
+            <ListItem
+              key={`${f.username}`}
+              alignItems="flex-start"
+              sx={{
+                cursor: "pointer",
+                transition: "background-color 0.25s ease-in-out",
+                "&:hover": { backgroundColor: "#f5f5f5" },
+              }}
+            >
+              <ListItemAvatar>
+                <Avatar alt={f.name} src={f.avatarSrc} />
+              </ListItemAvatar>
+              <ListItemText
+                primary={
+                  <Typography
+                    sx={{
+                      color: "#525252",
+                      fontWeight: "bold",
+                      userSelect: "none",
+                    }}
+                  >
+                    {f.name}
+                  </Typography>
+                }
+              />
+            </ListItem>
+          ))}
+        </List>
+      </Box>
 
       <NavigationBar index={index} onChange={onChange} />
     </Box>

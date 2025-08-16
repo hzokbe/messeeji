@@ -35,21 +35,32 @@ const Settings = () => {
         height: "100dvh",
       }}
     >
-      <Typography
-        variant="h2"
-        component="h1"
+      <Box
         sx={{
-          whiteSpace: "nowrap",
-          overflow: "hidden",
-          textOverflow: "ellipsis",
-          textAlign: "center",
-          userSelect: "none",
-          fontWeight: "bolder",
-          color: "#a3a3a3",
+          flex: "1",
+          display: "flex",
+          alignContent: "center",
+          justifyContent: "center",
+          flexDirection: "column",
+          width: "100%",
         }}
       >
-        Settings
-      </Typography>
+        <Typography
+          variant="h2"
+          component="h1"
+          sx={{
+            whiteSpace: "nowrap",
+            overflow: "hidden",
+            textOverflow: "ellipsis",
+            textAlign: "center",
+            userSelect: "none",
+            fontWeight: "bolder",
+            color: "#a3a3a3",
+          }}
+        >
+          Settings
+        </Typography>
+      </Box>
 
       <NavigationBar index={index} onChange={onChange} />
     </Box>
