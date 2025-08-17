@@ -69,7 +69,7 @@ const Friends = () => {
           flex: "1",
           display: "flex",
           alignContent: "center",
-          justifyContent: "center",
+          justifyContent: "start",
           flexDirection: "column",
           width: "100%",
         }}
