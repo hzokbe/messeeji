@@ -61,7 +61,6 @@ const Friends = () => {
         alignItems: "center",
         justifyContent: "start",
         height: "100dvh",
-        padding: "8px",
       }}
     >
       <Box
