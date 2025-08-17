@@ -78,12 +78,14 @@ const Settings = () => {
           tabIndex={-1}
           aria-label="Avatar image"
           sx={{
-            borderRadius: "40px",
+            borderRadius: "10px",
             "&:has(:focus-visible)": {
               outline: "2px solid",
               outlineOffset: "2px",
             },
             margin: "8px",
+            padding: "16px",
+            backgroundColor: "#e5e5e5",
           }}
         >
           <Avatar
