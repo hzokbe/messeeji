@@ -1,0 +1,4 @@
+quarkus:
+  mongodb:
+    connection-string: "${MONGO_CONNECTION_STRING:mongodb://localhost:27017/messeeji}"
+    database: "${MONGO_DATABASE:messeeji}"
