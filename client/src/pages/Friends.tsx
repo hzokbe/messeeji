@@ -12,9 +12,10 @@ import { useEffect, useState } from "react";
 
 import { useLocation, useNavigate } from "react-router-dom";
 
-import handleNavigationChange from "../utils/navigation";
-
-import setIndexByPathname from "../utils/location";
+import {
+  handleNavigationChange,
+  setIndexByPathname,
+} from "../utils/navigation";
 
 import NavigationBar from "../components/NavigationBar";
 
