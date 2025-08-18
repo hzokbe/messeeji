@@ -23,11 +23,7 @@ import { PersonOutlined, SendOutlined } from "@mui/icons-material";
 
 import type { User } from "../types/user";
 
-type Message = {
-  content: string;
-  date: Date;
-  type: "sent" | "received";
-};
+import type { Message } from "../types/message";
 
 type Conversation = {
   author: User;
