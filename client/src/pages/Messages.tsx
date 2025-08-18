@@ -1,5 +1,4 @@
 import {
-  Avatar,
   Box,
   Button,
   List,
@@ -20,7 +19,9 @@ import setIndexByPathname from "../utils/location";
 
 import NavigationBar from "../components/NavigationBar";
 
-import { SendOutlined } from "@mui/icons-material";
+import { PersonOutlined, SendOutlined } from "@mui/icons-material";
+
+import type { User } from "../types/user";
 
 type Message = {
   content: string;
@@ -29,8 +30,7 @@ type Message = {
 };
 
 type Conversation = {
-  author: string;
-  avatarSrc: string;
+  author: User;
   messages: Message[];
 };
 
@@ -48,8 +48,12 @@ const Messages = () => {
 
   const conversations: Conversation[] = [
     {
-      author: "Alan Turing",
-      avatarSrc: "static/images/avatar/alan-turing.jpg",
+      author: {
+        name: "Alan",
+        lastName: "Turing",
+        username: "alan_turing",
+        status: "online",
+      },
       messages: [
         {
           content: "Hello! I'm Alan Turing!",
@@ -69,8 +73,12 @@ const Messages = () => {
       ],
     },
     {
-      author: "Linus Torvalds",
-      avatarSrc: "static/images/avatar/linus-torvalds.jpg",
+      author: {
+        name: "Linus",
+        lastName: "Torvalds",
+        username: "linus_torvalds",
+        status: "online",
+      },
       messages: [
         {
           content: "F*ck NVIDIA!",
@@ -90,7 +98,7 @@ const Messages = () => {
     const lastMessage = c.messages[c.messages.length - 1]?.content || "";
 
     return (
-      c.author.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      c.author.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       lastMessage.toLowerCase().includes(searchTerm.toLowerCase())
     );
   });
@@ -153,17 +161,32 @@ const Messages = () => {
 
               return (
                 <ListItem
-                  key={`${c.author}-${idx}`}
-                  alignItems="flex-start"
+                  key={`${c.author.username}-${idx}`}
                   onClick={() => setSelectedConversation(c)}
                   sx={{
                     cursor: "pointer",
                     transition: "background-color 0.25s ease-in-out",
                     "&:hover": { backgroundColor: "#f5f5f5" },
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "8px",
                   }}
                 >
-                  <ListItemAvatar>
-                    <Avatar alt={c.author} src={c.avatarSrc} />
+                  <ListItemAvatar
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <PersonOutlined
+                      sx={{
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        color: "#a3a3a3",
+                      }}
+                    />
                   </ListItemAvatar>
                   <ListItemText
                     primary={
@@ -174,7 +197,7 @@ const Messages = () => {
                           userSelect: "none",
                         }}
                       >
-                        {c.author}
+                        {c.author.name} {c.author.lastName}
                       </Typography>
                     }
                     secondary={
