@@ -5,5 +5,7 @@ export type User = {
 
   lastName: string;
 
+  username: string;
+
   status: UserStatus;
 };
