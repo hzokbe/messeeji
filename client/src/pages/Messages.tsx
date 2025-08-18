@@ -21,14 +21,9 @@ import NavigationBar from "../components/NavigationBar";
 
 import { PersonOutlined, SendOutlined } from "@mui/icons-material";
 
-import type { User } from "../types/user";
+import type { Conversation } from "../types/conversation";
 
 import type { Message } from "../types/message";
-
-type Conversation = {
-  author: User;
-  messages: Message[];
-};
 
 const Messages = () => {
   const [index, setIndex] = useState(1);
