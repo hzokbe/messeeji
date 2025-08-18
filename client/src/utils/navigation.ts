@@ -1,6 +1,6 @@
 import type { NavigateFunction } from "react-router-dom";
 
-type SetIndexFunction = (index: number) => void;
+export type SetIndexFunction = (index: number) => void;
 
 export function handleNavigationChange(
   newIndex: number,
