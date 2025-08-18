@@ -22,6 +22,7 @@ const Settings = () => {
   const user: User = {
     name: "Lucas",
     lastName: "Fernandes",
+    username: "hzokbe",
     status: "online",
   };
 
